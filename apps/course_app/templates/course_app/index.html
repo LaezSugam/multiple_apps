@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Courses</title>
+  </head>
+  <body>
+    <h2>Add a new course</h2>
+    <form action="{% url 'course_app:add_course' %}" method="post">
+      {% csrf_token %}
+      <label for="name">Course Name: <input type="text" name="name" id="name" /> </label>
+      <label for="desc">Course Description: <textarea name="desc" id="desc"></textarea></label>
+      <input type="submit" value="Add" />
+    </form>
+
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>
+              Course Name
+            </th>
+            <th>
+              Description
+            </th>
+            <th>
+              Date Added
+            </th>
+            <th>
+              Comment
+            </th>
+            <th>
+              Remove
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in courses %}
+          <tr>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.course_description.description }}</td>
+            <td>{{ course.created_at }}</td>
+            <td><a href="{% url 'course_app:comment' id=course.id %}">View/Add Comments</a></td>
+            <td><a href="{% url 'course_app:confirm_remove' id=course.id %}">Delete</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <a href="{% url 'course_app:user_courses' %}">Add Users to Courses</a>
+      <form action="{% url 'log_reg:logout' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" name="logout" value="Logout">
+      </form>
+
+  </body>
+</html>

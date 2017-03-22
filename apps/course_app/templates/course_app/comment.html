@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Courses</title>
+  </head>
+  <body>
+    <h2>Add a comment</h2>
+    <p>
+      <a href="{% url 'course_app:index' %}">Go back</a>
+    </p>
+    <form action="{% url 'course_app:add_comment' id=id %}" method="post">
+      {% csrf_token %}
+      <label for="comment"><textarea name="comment" id="comment"></textarea></label>
+      <input type="submit" value="Add Comment" />
+    </form>
+
+
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>
+              Comments
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for comment in comments %}
+          <tr>
+            <td>{{ comment.comment }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <form action="{% url 'log_reg:logout' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" name="logout" value="Logout">
+      </form>
+
+  </body>
+</html>
